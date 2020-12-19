@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:imvula/assets.dart';
+import 'package:imvula/models/property.dart';
+import 'package:imvula/ui/pages/pages.dart';
 import 'package:imvula/ui/res/colors.dart';
 
 class LeadDetailPage extends StatefulWidget {
+  final Property property;
+  LeadDetailPage({this.property});
   @override
   _LeadDetailPageState createState() => _LeadDetailPageState();
 }
@@ -11,11 +15,17 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text("Details"),
+      ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              PropertyDetail(),
+              PropertyDetail(
+                property: widget.property,
+              ),
               PersonDetail(),
             ],
           ),
@@ -26,6 +36,8 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 }
 
 class PersonDetail extends StatelessWidget {
+  final Property property;
+  PersonDetail({this.property});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,11 +99,13 @@ class PersonDetail extends StatelessWidget {
               _buildCallNow(),
             ],
           ),
+          _buildContactRow(),
           Divider(
             height: 30.0,
             color: Colors.grey,
           ),
-          _buildMessageBox(),
+
+          //  _buildMessageBox(),
         ],
       ),
     );
@@ -121,7 +135,7 @@ class PersonDetail extends StatelessWidget {
   _buildCallNow() {
     return Container(
       height: 40.0,
-      width: 140.0,
+      width: 130.0,
       decoration: BoxDecoration(
           color: complementaryColor, borderRadius: BorderRadius.circular(8.0)),
       child: Row(
@@ -137,6 +151,30 @@ class PersonDetail extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 18.0),
           )
         ],
+      ),
+    );
+  }
+
+  _buildContactRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _buildContactItem(onTap: () {}, iconPath: Asset.whatsappIcon),
+        SizedBox(width: 20.0),
+        _buildContactItem(onTap: () {}, iconPath: Asset.messageIcon),
+        SizedBox(width: 20.0),
+        _buildContactItem(onTap: () {}, iconPath: Asset.gmailIcon),
+      ],
+    );
+  }
+
+  _buildContactItem({Function onTap, String iconPath}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 30.0,
+        width: 30.0,
+        child: Image.asset(iconPath),
       ),
     );
   }
@@ -175,6 +213,8 @@ class PersonDetail extends StatelessWidget {
 }
 
 class PropertyDetail extends StatelessWidget {
+  final Property property;
+  PropertyDetail({this.property});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -186,7 +226,7 @@ class PropertyDetail extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Image.asset(
-              Asset.house,
+              property.imgPath,
               height: 250.0,
               fit: BoxFit.cover,
             ),
@@ -205,7 +245,7 @@ class PropertyDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Home Value",
+                        property.propertyName,
                         style: TextStyle(
                           color: primaryColor,
                           fontSize: 18.0,
@@ -219,7 +259,7 @@ class PropertyDetail extends StatelessWidget {
                       ),
                     ]),
                 Text(
-                  "\$500,000",
+                  property.propertyPrice,
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
@@ -227,11 +267,11 @@ class PropertyDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "2200 Sq Ft",
+                  property.propertyInfo,
                   style: TextStyle(color: greyColor),
                 ),
                 Text(
-                  "100 Main Street, Aliso Veiejo, CA 95656",
+                  property.propertyAddress,
                   style: TextStyle(color: greyColor),
                 )
               ],

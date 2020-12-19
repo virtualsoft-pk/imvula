@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:imvula/models/data.dart';
 import 'package:imvula/models/models.dart';
 import 'package:imvula/ui/widgets/widget.dart';
@@ -21,10 +22,21 @@ class _ListingsPageState extends State<ListingsPage> {
           children: [
             Expanded(
               child: ListView.builder(
-                  itemCount: propertyList.length,
+                  itemCount: newPropertyLeads.length,
                   itemBuilder: (context, index) {
-                    Property property = propertyList[index];
-                    return PropertyTile(property: property);
+                    Property property = newPropertyLeads[index];
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 500),
+                      child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: PropertyTile(
+                            property: property,
+                          ),
+                        ),
+                      ),
+                    );
                   }),
             ),
           ],

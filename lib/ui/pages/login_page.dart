@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imvula/ui/pages/pages.dart';
+import 'package:imvula/ui/res/colors.dart';
 import 'package:imvula/ui/widgets/widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +16,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/imvula_logo.png"),
+            Text(
+              "Login",
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.w600),
+            ),
             SizedBox(
               height: 20.0,
             ),

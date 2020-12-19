@@ -11,7 +11,7 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     NotificationPage(),
     SettingPage(),
-    LeadDetailPage(),
+    HomePage(),
     ListingsPage(),
     SocialPage(),
   ];
@@ -19,7 +19,7 @@ class _NavScreenState extends State<NavScreen> {
   final Map<String, IconData> _icons = const {
     'Notification': Icons.notifications,
     'Setting': Icons.settings,
-    'Leads': Icons.home,
+    'Home': Icons.home,
     'Listings': Icons.list,
     'Social': Icons.contact_mail,
   };
