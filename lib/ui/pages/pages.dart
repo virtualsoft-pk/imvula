@@ -1,3 +1,9 @@
 export 'home_page.dart';
 export 'login_page.dart';
 export 'splash_page.dart';
+export 'nav_page.dart';
+export 'notification_page.dart';
+export 'setting_page.dart';
+export 'listings_page.dart';
+export 'social_page.dart';
+export 'lead_detail_page.dart';
