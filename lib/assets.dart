@@ -4,9 +4,13 @@ class Asset {
 
   static const String imvulaLogo = '${_images}imvula_logo.png';
 
-  static const String whatsappIcon = '${_icons}whatsapp.png';
-  static const String gmailIcon = '${_icons}gmail.png';
-  static const String messageIcon = '${_icons}chatting.png';
+  static const String callIcon = '${_icons}phone-call.png';
+  static const String gmailIcon = '${_icons}email.png';
+  static const String messageIcon = '${_icons}comment.png';
+  static const String closeIcon = '${_icons}close.png';
+  static const String homeIcon = '${_icons}home.png';
+  static const String sellIcon = '${_icons}e-commerce.png';
+  static const String prospectIcon = '${_icons}magnifier.png';
 
   static const String house = '${_images}house.jpg';
   static const String house1 = '${_images}house1.jpg';

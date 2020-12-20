@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:imvula/models/property.dart';
+import 'package:imvula/ui/pages/lead_accept_page.dart';
 import 'package:imvula/ui/pages/pages.dart';
 import 'package:imvula/ui/res/colors.dart';
 
 class PropertyTile extends StatelessWidget {
+  final bool isToday;
   final Property property;
-  PropertyTile({this.property});
+  PropertyTile({this.property, this.isToday});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: property.isAccepted != null
-          ? () {}
+          ? () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LeadAcceptPage(
+                  property: property,
+                );
+              }));
+            }
           : () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return LeadDetailPage(

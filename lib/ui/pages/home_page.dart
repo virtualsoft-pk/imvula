@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                 itemCount: propertyList.length,
                 itemBuilder: (context, index) {
                   Property property = propertyList[index];
-                  return PropertyTile(property: property);
+                  return PropertyTile(isToday: true, property: property);
                 }),
           ),
         ],
