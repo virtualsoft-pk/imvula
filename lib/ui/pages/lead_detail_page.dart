@@ -3,7 +3,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:imvula/assets.dart';
 import 'package:imvula/models/property.dart';
-import 'package:imvula/ui/pages/pages.dart';
 import 'package:imvula/ui/res/colors.dart';
 import 'package:imvula/ui/widgets/circular_timer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,6 +19,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -29,12 +29,14 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              PropertyDetail(
-                property: widget.property,
-              ),
+              _index == 0
+                  ? PropertyDetail(
+                      property: widget.property,
+                    )
+                  : Container(),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                height: 400.0,
+                height: _index == 0 ? 400.0 : size.height,
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -105,12 +107,10 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
                               color: primaryColor,
                             )
                           : Container(),
+                      SizedBox(height: 10.0),
                       _selectDetails(_index),
-                      Divider(
-                        height: 30.0,
-                        color: Colors.grey[300],
-                      ),
-                      _contactNotes(),
+                      _index != 0 ? _buildPropertyInquiry() : Container(),
+                      _index != 0 ? _buildNotesTile() : Container(),
                     ],
                   ),
                 ),
@@ -118,6 +118,20 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _buildPropertyInquiry() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 60.0),
+      child: ExpandablePanel(
+        header: Text(
+          "View Property Inquiry",
+          style: TextStyle(fontSize: 16.0),
+        ),
+        expanded: Container(),
       ),
     );
   }
@@ -180,20 +194,58 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
             Asset.prospectIcon,
           ],
         );
+      case 3:
+        return _buildDetails(
+          title: "What type of Opportunity?",
+          labels: ["Showing", "Meeting", "To Do"],
+          onTaps: [() {}, () {}, () {}],
+          iconPaths: [
+            Asset.homeIcon,
+            Asset.sellIcon,
+            Asset.prospectIcon,
+          ],
+        );
     }
   }
 
-  _contactNotes() {
-    return ExpandablePanel(
-      header: Text("Contact Notes"),
-      expanded: Container(
-        padding: EdgeInsets.only(bottom: 30.0),
-        height: 200.0,
-        child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Text("Note # $index");
-            }),
+  _buildNotesTile() {
+    return Column(
+      children: [
+        _buildExpandableList(isAddNote: true, title: "Add Note"),
+        _buildExpandableList(isAddNote: false, title: "Notes"),
+        _buildExpandableList(isAddNote: false, title: "Opportunities"),
+        _buildExpandableList(isAddNote: false, title: "To Dos"),
+      ],
+    );
+  }
+
+  _buildExpandableList({bool isAddNote, String title}) {
+    return Container(
+      padding: EdgeInsets.only(left: 6.0, top: 6.0),
+      decoration: BoxDecoration(
+          border: Border.all(
+        width: 1,
+        color: Colors.grey,
+      )),
+      child: ExpandablePanel(
+        header: Text(
+          title,
+          style: TextStyle(fontSize: 16.0),
+        ),
+        expanded: Container(
+            padding: EdgeInsets.only(bottom: 30.0),
+            child: isAddNote
+                ? TextFormField(
+                    decoration: InputDecoration(hintText: "Note..."),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("This is a sample note."),
+                      Text("This is a sample note."),
+                      Text("This is a sample note."),
+                    ],
+                  )),
       ),
     );
   }
@@ -208,7 +260,7 @@ class _LeadDetailPageState extends State<LeadDetailPage> {
         Text(
           title,
           style: TextStyle(
-              color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w500),
+              color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w400),
         ),
         SizedBox(height: 20.0),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:imvula/ui/pages/lead_accept_page.dart';
 import 'package:imvula/ui/pages/pages.dart';
 import 'package:imvula/ui/res/colors.dart';
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: primaryColor),
-      home: SplashPage(),
+      home: NavScreen(),
     );
   }
 }
